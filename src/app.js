@@ -1,22 +1,37 @@
-// Create a server using express
+// Multiple Route Handlers
 
 const express = require('express');
 const app = express();
 
-app.get('/user/:userId/books/:bookId', (req, res) => {
-  console.log(req.params);
-  res.send({ firstName: 'Shubhangi', lastName: 'Kumbhar' });
-});
+// Multiple Route Handlers
 
-app.get('/flights/:from-:to', (req, res) => {
-  res.send(req.params);
-});
+app.get('/user', [
+  (req, res, next) => {
+    console.log('Handling the route User1');
+    next();
+    // res.send('Response 1');
+  },
+  (req, res, next) => {
+    console.log('Handling the route User2');
+    // res.send('Response 2');
+    next();
+  },
+  (req, res, next) => {
+    console.log('Handling the route User3');
+    // res.send('Response 3');
+    next();
+  },
+  (req, res, next) => {
+    console.log('Handling the route User4');
+    // res.send('Response 4');
+    next();
+  },
+  (req, res, next) => {
+    console.log('Handling the route User5');
+    res.send('Response 5');
+  },
+]);
 
-app.get('/platae/:genus.:species', (req, res) => {
-  res.send(req.params);
-});
-
-//Listen to the server
 app.listen(3000, (req, res) => {
-  console.log('Server is successfully running on port number 3000');
+  console.log('Server is listening on port number 3000');
 });
