@@ -14,9 +14,9 @@ app.use('/namaste', (req, res) => {
   res.send('Namaste from server');
 });
 
-// app.use((req, res) => {
-//   res.send('Hello from express js server');
-// });
+app.use((req, res) => {
+  res.send('Hello from express js server');
+});
 
 //Listen to the server
 app.listen(3000, (req, res) => {
