@@ -1,15 +1,10 @@
-// node js has a http module
+// Create a server using express
 
-//import http module
-const http = require('node:http');
+const express = require('express');
+const app = express();
 
-//Create server
-const server = http.createServer((req, res) => {
-  if (req.url === '/getSecretData') {
-    res.end('There is no secret data ');
-  }
-  res.end('Hello World !!!');
+//Listen to the server
+app.listen(7777, (req, res) => {
+  res.send('Hello World from express server :)');
+  console.log('Server is successfully running on port number 7777');
 });
-
-// Listen to the server
-server.listen(3000);
