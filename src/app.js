@@ -14,14 +14,6 @@ app.use('/namaste', (req, res) => {
   res.send('Namaste from server');
 });
 
-app.use('/hello', (req, res) => {
-  res.send('Hello from the server');
-});
-
-app.use('/hi', (req, res) => {
-  res.send('Hi from the server');
-});
-
 // app.use((req, res) => {
 //   res.send('Hello from express js server');
 // });
