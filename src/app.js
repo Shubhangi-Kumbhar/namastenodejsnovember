@@ -1,12 +1,32 @@
-// node js has a http module
+// Create a server using express
 
-//import http module
-const http = require('node:http');
+const express = require('express');
+const app = express();
 
-//Create server
-const server = http.createServer((req, res) => {
-  res.end('Hello World !!!');
+//Handle Routes
+
+// handling specific test route
+app.use('/test', (req, res) => {
+  res.send('Hello from test route');
 });
 
-// Listen to the server
-server.listen(3000);
+app.use('/namaste', (req, res) => {
+  res.send('Namaste from server');
+});
+
+app.use('/hello', (req, res) => {
+  res.send('Hello from the server');
+});
+
+app.use('/hi', (req, res) => {
+  res.send('Hi from the server');
+});
+
+// app.use((req, res) => {
+//   res.send('Hello from express js server');
+// });
+
+//Listen to the server
+app.listen(3000, (req, res) => {
+  console.log('Server is successfully running on port number 3000');
+});
