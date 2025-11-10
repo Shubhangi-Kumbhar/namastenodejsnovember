@@ -6,16 +6,25 @@ const app = express();
 //Handle Routes
 
 // handling specific test route
-app.use('/test', (req, res) => {
-  res.send('Hello from test route');
+
+// Get the data from database
+app.get('/user', (req, res) => {
+  res.send({ firstName: 'Shubhangi', lastName: 'Kumbhar' });
 });
 
-app.use('/namaste', (req, res) => {
-  res.send('Namaste from server');
+//Saving data to the database
+app.post('/user', (req, res) => {
+  res.send('Data successfully saved to database');
 });
 
-app.use((req, res) => {
-  res.send('Hello from express js server');
+//Delete the data from database
+app.delete('/user', (req, res) => {
+  res.send('Deleted data from database');
+});
+
+//Generic route must be written at last // all the specific get , post, delete routes should be placed before generic route
+app.use('/user', (req, res) => {
+  res.send('HAHAHAHAHAHA');
 });
 
 //Listen to the server
