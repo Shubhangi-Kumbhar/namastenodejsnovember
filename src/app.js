@@ -7,18 +7,96 @@ const { User } = require('./models/user');
 
 // use express middleware to convert request body from json to js object
 app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 
 app.post('/signup', async (req, res, next) => {
   // Logic to signup a user
-
   // Create a new user instance
   const user = new User(req.body);
+  console.log('req.body : ' + req.body);
   //Save the user object into db
   try {
     await user.save();
     res.send('User added successfully');
   } catch (error) {
     res.status(400).send('Error in saving the user : ' + error.message);
+  }
+});
+
+// 1st case :- Get user using email id or find user using email id
+
+app.get('/user', async (req, res) => {
+  //Get user id or field by using which we have to get user record
+  const userEmail = req.body.emailId;
+  console.log(req.body.emailId);
+  try {
+    const user = await User.find({ emailId: userEmail });
+
+    if (!user) {
+      res.status(404).send('User not found');
+    } else {
+      res.send(user);
+    }
+  } catch {
+    (err) => {
+      req.send('Something went wrong' + err.message);
+    };
+  }
+});
+
+app.get('/firstUserInDocument', async (req, res) => {
+  //Get user id or field by using which we have to get user record
+  try {
+    const user = await User.findOne({});
+
+    if (!user) {
+      res.status(404).send('User not found');
+    } else {
+      res.send(user);
+    }
+  } catch {
+    (err) => {
+      req.send('Something went wrong' + err.message);
+    };
+  }
+});
+// second case 2--Get user using email id or find user using findOne method
+
+app.get('/userOne', async (req, res) => {
+  //Get user id or field by using which we have to get user record
+  const userEmail = req.body.emailId;
+  console.log(req.body.emailId);
+  try {
+    const user = await User.findOne({ emailId: userEmail });
+
+    if (!user) {
+      res.status(404).send('User not found');
+    } else {
+      res.send(user);
+    }
+  } catch {
+    (err) => {
+      req.send('Something went wrong' + err.message);
+    };
+  }
+});
+
+//Find all users
+app.get('/feed', async (req, res) => {
+  console.log(req.body);
+  //Get user id or field by using which we have to get user record
+  try {
+    const user = await User.find({});
+
+    if (!user) {
+      res.status(404).send('User not found');
+    } else {
+      res.send(user);
+    }
+  } catch {
+    (err) => {
+      req.send('Something went wrong' + err.message);
+    };
   }
 });
 
