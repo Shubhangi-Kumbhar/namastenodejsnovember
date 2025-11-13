@@ -2,6 +2,7 @@ const express = require('express');
 const app = express();
 const { connectDB } = require('./config/database');
 const { User } = require('./models/user');
+const { ReturnDocument } = require('mongodb');
 
 // Create a route for user signup
 
@@ -122,6 +123,28 @@ app.delete('/user', async (req, res) => {
   } catch {
     (err) => {
       req.status(400).send('Something went wrong' + err.message);
+    };
+  }
+});
+
+// Update or patch user api
+app.patch('/user', async (req, res) => {
+  const userId = req.body.userId;
+  const data = req.body;
+  try {
+    const user = await User.findByIdAndUpdate({ _id: userId }, data, {
+      returnDocument: 'after',
+    });
+    console.log(user);
+    if (!user) {
+      res.status(404).send('User not found');
+    } else {
+      console.log(user);
+      res.send('User updated successfully');
+    }
+  } catch {
+    (err) => {
+      req.send('Something went wrong' + err.message);
     };
   }
 });
