@@ -105,6 +105,27 @@ app.get('/feed', async (req, res) => {
   }
 });
 
+// API to delete use id using userId
+
+app.delete('/user', async (req, res) => {
+  const userId = req.body.userId;
+  try {
+    console.log('userId : ' + userId);
+
+    const user = await User.findByIdAndDelete({ _id: userId });
+    if (!user) {
+      res.status(404).send('User not found');
+    } else {
+      console.log(user);
+      res.send('User deleted successfully');
+    }
+  } catch {
+    (err) => {
+      req.status(400).send('Something went wrong' + err.message);
+    };
+  }
+});
+
 connectDB()
   .then(() => {
     console.log('Database connection is estalished..');
