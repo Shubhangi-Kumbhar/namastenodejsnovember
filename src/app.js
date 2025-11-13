@@ -27,20 +27,25 @@ app.post('/signup', async (req, res, next) => {
 
 app.get('/user', async (req, res) => {
   //Get user id or field by using which we have to get user record
-  const userEmail = req.body.emailId;
-  console.log(req.body.emailId);
-  try {
-    const user = await User.find({ emailId: userEmail });
 
-    if (!user) {
-      res.status(404).send('User not found');
-    } else {
-      res.send(user);
+  if (req.body && req.body.emailId) {
+    const userEmail = req?.body?.emailId;
+    console.log(req.body.emailId);
+    try {
+      const user = await User.find({ emailId: userEmail });
+
+      if (!user) {
+        res.status(404).send('User not found');
+      } else {
+        res.send(user);
+      }
+    } catch {
+      (err) => {
+        req.send('Something went wrong' + err.message);
+      };
     }
-  } catch {
-    (err) => {
-      req.send('Something went wrong' + err.message);
-    };
+  } else {
+    res.send('emailID field is not found');
   }
 });
 
