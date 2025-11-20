@@ -30,7 +30,7 @@ app.get('/user', async (req, res) => {
   //Get user id or field by using which we have to get user record
 
   if (req.body && req.body.emailId) {
-    const userEmail = req?.body?.emailId;
+    const userEmail = req.body.emailId;
     console.log(req.body.emailId);
     try {
       const user = await User.find({ emailId: userEmail });
@@ -134,6 +134,7 @@ app.patch('/user', async (req, res) => {
   try {
     const user = await User.findByIdAndUpdate({ _id: userId }, data, {
       returnDocument: 'after',
+      runValidators: true,
     });
     console.log(user);
     if (!user) {
